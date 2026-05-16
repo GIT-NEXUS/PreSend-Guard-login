@@ -1,8 +1,9 @@
-package presendguard.entity; // 이 줄이 반드시 첫 줄에 있어야 함
+package presendguard.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -20,4 +21,12 @@ public class User {
     private String password;
 
     private String username;
+
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
 }
